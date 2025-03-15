@@ -106,5 +106,6 @@ def signup_for_activity(activity_name: str, email: str):
     if len(activity["participants"]) >= activity["max_participants"]:
         return {"message": f"{activity_name} is full"}
     # Sign up the student for the activity if the above conditions are not met
-    activity["participants"].append(email)
+    else:
+        activity["participants"].append(email)
     return {"message": f"Signed up {email} for {activity_name}"}
