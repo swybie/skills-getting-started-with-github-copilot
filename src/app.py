@@ -98,10 +98,12 @@ def signup_for_activity(activity_name: str, email: str):
     # Get the specificy activity
     activity = activities[activity_name]
 
-    # Add student
+    # Check if email is already signed up
     if email in activity["participants"]:
         return {"message": f"{email} is already signed up for {activity_name}"}
+    # Check if activity is full
     if len(activity["participants"]) >= activity["max_participants"]:
         return {"message": f"{activity_name} is full"}
+    # Sign up the student
     activity["participants"].append(email)
     return {"message": f"Signed up {email} for {activity_name}"}
