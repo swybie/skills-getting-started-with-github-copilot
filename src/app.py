@@ -95,17 +95,25 @@ def signup_for_activity(activity_name: str, email: str):
     if activity_name not in activities:
         raise HTTPException(status_code=404, detail="Activity not found")
 
-    # Get the specificy activity
+    # Get the specific activity
     activity = activities[activity_name]
 
-    # Check if email is already signed up. If so, don't sign the student up again and display a message instead
-    # More robust by checking for email in a case-insensitive manner
-    if any(existing_email.lower() == email.lower() for existing_email in activity["participants"]):
+    # Check if email is already signed up
+    if is_already_registered(activity_name, email):
         return {"message": f"{email} is already signed up for {activity_name}"}
-    # Check if activity is full. If so, don't sign the student up and display a message instead
+
+    # Check if activity is full
     if len(activity["participants"]) >= activity["max_participants"]:
         return {"message": f"{activity_name} is full"}
-    # Sign up the student for the activity if the above conditions are not met
-    else:
-        activity["participants"].append(email)
+
+    # Sign up the student for the activity
+    activity["participants"].append(email)
     return {"message": f"Signed up {email} for {activity_name}"}
+
+
+def is_already_registered(activity_name, email):
+    """Check if the student is already registered"""
+    activity = activities.get(activity_name)
+    if activity:
+        return any(existing_email.lower() == email.lower() for existing_email in activity["participants"])
+    return False
