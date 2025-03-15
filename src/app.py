@@ -98,7 +98,7 @@ def signup_for_activity(activity_name: str, email: str):
     # Get the specificy activity
     activity = activities[activity_name]
 
-    # Check if email is already signed up
+    # Check if email is already signed up. If so, don't sign the student up again and display a message
     if email in activity["participants"]:
         return {"message": f"{email} is already signed up for {activity_name}"}
     # Check if activity is full
