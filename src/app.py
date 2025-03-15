@@ -99,7 +99,8 @@ def signup_for_activity(activity_name: str, email: str):
     activity = activities[activity_name]
 
     # Check if email is already signed up. If so, don't sign the student up again and display a message instead
-    if email in activity["participants"]:
+    # More robust by checking for email in a case-insensitive manner
+    if any(existing_email.lower() == email.lower() for existing_email in activity["participants"]):
         return {"message": f"{email} is already signed up for {activity_name}"}
     # Check if activity is full. If so, don't sign the student up and display a message instead
     if len(activity["participants"]) >= activity["max_participants"]:
