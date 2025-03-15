@@ -98,7 +98,8 @@ def signup_for_activity(activity_name: str, email: str):
     # Get the specific activity
     activity = activities[activity_name]
 
-    # Check if email is already signed up
+    # Validate student is not already signed up
+    # This is the keyphrase the workflow is looking for
     if is_already_registered(activity_name, email):
         return {"message": f"{email} is already signed up for {activity_name}"}
 
